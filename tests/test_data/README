@@ -1,0 +1,17 @@
+test_contigs.fa
+--------------------
+Subset of an assembled metagenomic sequencing project.
+Assembled with Ray on multiple kmer lengths and merged with Newbler.
+
+test_contigs.faa
+--------------------
+Protein predicted from test_contigs.fa using prodigal version 2.60:
+prodigal -p meta -a test_contigs.faa -i test_contigs.fa
+
+test_contigs.out
+--------------------
+Rpsblast output when running against the Cog database
+ (ftp://ftp.ncbi.nih.gov/pub/mmdb/cdd/little_endian/) 
+as of 2014-04-15, with the command:
+
+rpsblast -outfmt "6 qseqid sseqid evalue pident score qstart qend sstart send length slen" -max_target_seqs 1 -evalue 0.001 -query test_contigs.faa -db ~/Data/cog_ncbi/Cog -out test_contigs.out -num_threads 1
