@@ -1,5 +1,8 @@
 from collections import defaultdict
 
+def read_per_phylum_scgs():
+    pass
+
 def read_blast_output(blastoutfile): 
     sseq_ids = []
     records = []

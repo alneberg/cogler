@@ -14,6 +14,33 @@ test_data_path = os.path.join(test_dir_path, "test_data")
 class TestIO(object):
     """Test input output for cogler"""
 
+    def test_read_per_phylum_scgs(self):
+        summary, phyla_scgs = read_per_phylum_scgs(
+                os.path.join(test_data_path, "test_phyla_scg.tsv"))
+        # First row
+        assert_true(summary.ix['Acidobacteria'].Number_genomes == 5)
+        assert_true(summary.ix['Acidobacteria'].Number_genera == 5)
+        assert_true(summary.ix['Acidobacteria'].Number_family == 2)
+        assert_true(summary.ix['Acidobacteria'].Number_classes == 2)
+        assert_true(summary.ix['Acidobacteria'].Number_SCG == 428)
+       
+        # Last row
+        assert_true(summary.ix['Gammaproteobacteria'].Number_genomes == 276)
+        assert_true(summary.ix['Gammaproteobacteria'].Number_genera == 76)
+        assert_true(summary.ix['Gammaproteobacteria'].Number_family == 28)
+        assert_true(summary.ix['Gammaproteobacteria'].Number_classes == 1)
+        assert_true(summary.ix['Gammaproteobacteria'].Number_SCG == 143)
+        
+        assert_true(phyla_scgs.ix['Acidobacteria'].COG0001 == 0)
+        assert_true(phyla_scgs.ix['Acidobacteria'].COG5665 == 0)
+        assert_true(phyla_scgs.ix['Acidobacteria'].COG0002 == 1)
+        
+        assert_true(phyla_scgs.ix['Gammaproteobacteria'].COG0001 == 0)
+        assert_true(phyla_scgs.ix['Gammaproteobacteria'].COG0012 == 1)
+        assert_true(phyla_scgs.ix['Gammaproteobacteria'].COG5665 == 0)
+
+        assert_true(phyla_scgs.ix['Acidobacteria'].sum() == summary.ix['Acidobacteria'].Number_SCG)
+        assert_true(phyla_scgs.ix['Gammaproteobacteria'].sum() == summary.ix['Gammaproteobacteria'].Number_SCG)
     def test_blast(self):
         records, sseq_ids = read_blast_output(
                 os.path.join(test_data_path, "test_contigs.out"))
