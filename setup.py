@@ -19,6 +19,7 @@ setup(name='cogler',
       include_package_data=True,
       zip_safe=False,
       install_requires= ['biopython>=1.62b',
+                        'bcbio-gff>=0.4',
                         'nose==1.3.0'],
       entry_points="""
       # -*- Entry points: -*-
