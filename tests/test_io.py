@@ -5,7 +5,8 @@ from os import listdir
 import os
 import sys
 
-from cogler.io import read_blast_output, read_markers_file, read_clustering_file
+from cogler.io import (read_blast_output, read_markers_file,  
+    read_clustering_file, read_per_phylum_scgs)
 
 file_path = os.path.realpath(__file__)
 test_dir_path = os.path.dirname(file_path)

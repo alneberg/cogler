@@ -1,7 +1,20 @@
 from collections import defaultdict
+import pandas as pd
 
-def read_per_phylum_scgs():
-    pass
+def read_per_phylum_scgs(fn):
+    """Read information from phylum scg file.
+
+    Arguments:
+    fn -- file name
+
+    Output:
+    summary -- pandas dataframe with information for each phylum
+    phyla_scgs -- pandas dataframe with cogs for each phylum
+    """
+    df = pd.read_table(fn, index_col=0)
+    summary = df.ix[:,'Number_genomes':'Number_SCG']
+    phyla_scg = df.ix[:, 'COG0001':]
+    return summary, phyla_scg
 
 def read_blast_output(blastoutfile): 
     sseq_ids = []
