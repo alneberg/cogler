@@ -1,9 +1,36 @@
 from collections import defaultdict
+import pandas as pd
 
-def read_per_phylum_scgs():
-    pass
+def read_per_phylum_scgs(fn):
+    """Read information from phylum scg file.
+
+    Arguments:
+    fn -- file name
+
+    Output:
+    summary -- pandas dataframe with information for each phylum
+    phyla_scgs -- pandas dataframe with cogs for each phylum
+    """
+    df = pd.read_table(fn, index_col=0)
+    summary = df.ix[:,'Number_genomes':'Number_SCG']
+    phyla_scg = df.ix[:, 'COG0001':]
+    return summary, phyla_scg
 
 def read_blast_output(blastoutfile): 
+    """Parses rpsblast output file.
+
+    Arguments:
+    blastoutfile -- file name
+
+    Output:
+    records -- list of rpsblast output lines, each line is a dictionary
+               with the column headers as keys and the column values
+               as values.
+    sseq_ids -- list of subject ids, cdd ids in this case.
+
+    Assumes rpsblast has been run with the -outfmt "6 qseqid sseqid
+    evalue pident score qstart qend sstart send length slen" option.
+    """
     sseq_ids = []
     records = []
     with open(blastoutfile) as in_handle:
@@ -36,12 +63,28 @@ def read_gff_file(gfffile):
     return featureid_locations
 
 def read_markers_file(marker_file):
-    # Stores each line of marker_file as an item in a list
+    """Read file with list of marker gene names.
+
+    Arguments:
+    marker_file -- file name
+
+    Output:
+        -- List of all marker genes.
+    """
     with open(marker_file) as mf:
         return [l.strip() for l in mf.readlines()]
 
 def read_clustering_file(cluster_file):
-    # Returns the cluster names and the contig names per cluster
+    """Read CONCOCT style clustering file, with contig_id, cluster_id pairs.
+
+    Arguments:
+    cluster_file -- file name
+
+    Output:
+    clusters -- unsorted list of cluster names
+    contigs_per_cluster -- dictionary with cluster ids as keys and contig ids as 
+                           values.
+    """
     contigs_per_cluster = defaultdict(list)
     clusters = set()
     with open(cluster_file) as cf:
