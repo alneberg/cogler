@@ -53,7 +53,6 @@ def main(args):
 
     # Per cluster, count the number of features
     for _, phylum in markers_per_phyla.iterrows():
-        import ipdb; ipdb.set_trace()
         if args.min_genera and phylum['Number_genera'] < args.min_genera:
             continue
         total = phylum['Number_SCG']
