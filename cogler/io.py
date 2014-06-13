@@ -81,19 +81,10 @@ def read_clustering_file(cluster_file):
     cluster_file -- file name
 
     Output:
-    clusters -- unsorted list of cluster names
-    contigs_per_cluster -- dictionary with cluster ids as keys and contig ids as 
+    cluster_per_contig -- dictionary with contig ids as keys and cluster ids as
                            values.
     """
-    contigs_per_cluster = defaultdict(list)
-    clusters = set()
-    with open(cluster_file) as cf:
-        for line in cf.readlines():
-            line_items = line.strip().split(',')
-            cluster = line_items[1]
-            contig = line_items[0]
-            clusters.add(cluster)
-            contigs_per_cluster[cluster].append(contig)
-    return list(clusters), contigs_per_cluster
-
+    with open(cluster_file, 'r') as cf:
+        cluster_per_contig = dict([tuple(row.strip().split(',')) for row in cf.readlines()])
+    return cluster_per_contig
 
