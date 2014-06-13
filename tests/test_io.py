@@ -88,15 +88,15 @@ class TestIO(object):
 
     def test_clustering_file(self):
         """Test for read_clustering_file method."""
-        clusters, contigs_per_cluster = read_clustering_file(
+        cluster_per_contig = read_clustering_file(
                 os.path.join(test_data_path, "test_clustering_gt1000.csv"))
-        assert_true(len(clusters) == 2)
-        assert_true('47' in clusters)
-        assert_true('94' in clusters)
-
-        assert_true(len(contigs_per_cluster['47']) == 7)
-        assert_true(len(contigs_per_cluster['94']) == 2)
-        assert_true('contig00001' in contigs_per_cluster['47'])
-        assert_true('contig00009' in contigs_per_cluster['47'])
-        assert_true('contig00004' in contigs_per_cluster['94'])
-        assert_true('contig00006' in contigs_per_cluster['94'])
+        assert_true(len(cluster_per_contig.keys()) == 9)
+        assert_true(cluster_per_contig['contig00001'] == '47')
+        assert_true(cluster_per_contig['contig00002'] == '47')
+        assert_true(cluster_per_contig['contig00003'] == '47')
+        assert_true(cluster_per_contig['contig00004'] == '94')
+        assert_true(cluster_per_contig['contig00005'] == '47')
+        assert_true(cluster_per_contig['contig00006'] == '94')
+        assert_true(cluster_per_contig['contig00007'] == '47')
+        assert_true(cluster_per_contig['contig00008'] == '47')
+        assert_true(cluster_per_contig['contig00009'] == '47')
