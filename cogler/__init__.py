@@ -84,8 +84,10 @@ class Output(object):
         assert scgs
         rows = {}
         for cluster, group_df in self.cogs_per_contig.df.groupby('cluster'):
-            summed_counts = group_df[scgs].sum()
-            nonzero = summed_counts.count()
+            # Sum counts, but don't make a difference
+            # if the count per contig is bigger than 1
+            summed_counts = (group_df[scgs]>0).sum()
+            nonzero = summed_counts[summed_counts > 0].count()
             exact_1 = summed_counts[summed_counts == 1].count()
             above_1 = nonzero - exact_1
             row = {"{0} total".format(phylum.name): total,
