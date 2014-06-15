@@ -83,15 +83,19 @@ class Output(object):
         assert phylum not in self.phyla
         scgs = filter(lambda c: c in self.cogs_per_contig.df.columns, phylum.scgs)
         total = len(phylum.scgs)
-        assert scgs
+
         rows = {}
         for cluster, group_df in self.cogs_per_contig.df.groupby('cluster'):
-            # Sum counts, but don't make a difference
-            # if the count per contig is bigger than 1
-            summed_counts = (group_df[scgs]>0).sum()
-            nonzero = summed_counts[summed_counts > 0].count()
-            exact_1 = summed_counts[summed_counts == 1].count()
-            above_1 = nonzero - exact_1
+            if not scgs:
+                exact_1 = 0
+                above_1 = 0
+            else:
+                # Sum counts, but don't make a difference
+                # if the count per contig is bigger than 1
+                summed_counts = (group_df[scgs]>0).sum()
+                nonzero = summed_counts[summed_counts > 0].count()
+                exact_1 = summed_counts[summed_counts == 1].count()
+                above_1 = nonzero - exact_1
             row = {"{0} total".format(phylum.name): total,
                    "{0} ==1".format(phylum.name): exact_1,
                    "{0} >1".format(phylum.name): above_1}
