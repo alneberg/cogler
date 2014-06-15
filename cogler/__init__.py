@@ -31,6 +31,8 @@ class CogsPerContig(object):
     def _construct_count_df(self):
         rows = {}
         for key, value in self.features_per_contig.iteritems():
+            if key not in self.cluster_per_contig:
+                continue
             row = dict(Counter(value))
             row['cluster'] = self.cluster_per_contig[key]
             rows[key] = row
