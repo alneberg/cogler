@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+# OSX annoying files
+*.DS_Store
+
 # Vim swap files
 *.swp
 
