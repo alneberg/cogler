@@ -64,6 +64,7 @@ def main(args):
 
     phyla_df = pd.read_table(args.marker_file, index_col=0)
     for phylum_name, row in phyla_df.iterrows():
+        phylum_name = phylum_name.strip()
         # scgs will be the column names for each column in
         # COG0001-end with a nonzero value for this phylum
         scgs = list(row.loc['COG0001':][row > 0].index.values)
