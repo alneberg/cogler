@@ -1,0 +1,15 @@
+5 CDD HITS:
+1. ==1 and in phylum scg and present twice in one contig. cdd=224544, cog=COG1629, contig00002_2, contig00002_7
+2. >1 and in phylum scg. cdd=225059, cog=COG2148, contig0001_2, contig0002_x.
+3. ==1 not in phylum scg. cdd=223080, cog=COG0001, contig00001_y
+4. > 1 not in phylum scg. cdd=223081, cog=COG0002, contig00001_z, contig00002_z
+5. 1 with too low coverage. cdd=224121, cog=COG1200, contig0001_1 
+
+Phyla only contains:
+COG1629
+COG2148
+
+This should generate
+total: 2
+>1: 1
+==1: 1
