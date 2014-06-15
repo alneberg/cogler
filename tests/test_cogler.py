@@ -143,4 +143,47 @@ class TestOutput(object):
         assert_true(output.result_matrix.ix['2', 'Phylum3 >1'] == 0)
         assert_true(output.result_matrix.ix['2', 'Phylum3 ==1'] == 1)
 
+    def test_multiple_on_contig(self):
+        """The output should not be affected if the same cog is present 
+        twice in one contig compared to only once"""
+        features_per_contig = self.features_per_contig
+        features_per_contig['contig3'].append('COG0003')
+        self.cogs_per_contig = CogsPerContig(self.cluster_per_contig,
+                features_per_contig)
+        output = Output(self.cogs_per_contig)
+        output.add_phylum(self.phylum1)
+        output.add_phylum(self.phylum2)
+        output.add_phylum(self.phylum3)
+
+        columns = ['Phylum1 total', 'Phylum1 >1', 'Phylum1 ==1',
+                'Phylum2 total', 'Phylum2 >1', 'Phylum2 ==1',
+                'Phylum3 total', 'Phylum3 >1', 'Phylum3 ==1']
+
+        for column in columns:
+            assert_true(column in output.result_matrix.columns)
+        assert_true(len(output.result_matrix.index.values) == 2)
+        assert_true(set(output.result_matrix.index.values) == set(['1', '2']))
+        assert_true(output.result_matrix.ix['1', 'Phylum1 total'] == 2)
+        assert_true(output.result_matrix.ix['1', 'Phylum1 >1'] == 1)
+        assert_true(output.result_matrix.ix['1', 'Phylum1 ==1'] == 1)
+
+        assert_true(output.result_matrix.ix['2', 'Phylum1 total'] == 2)
+        assert_true(output.result_matrix.ix['2', 'Phylum1 >1'] == 0)
+        assert_true(output.result_matrix.ix['2', 'Phylum1 ==1'] == 1)
+
+        assert_true(output.result_matrix.ix['1', 'Phylum2 total'] == 3)
+        assert_true(output.result_matrix.ix['1', 'Phylum2 >1'] == 0)
+        assert_true(output.result_matrix.ix['1', 'Phylum2 ==1'] == 2)
+
+        assert_true(output.result_matrix.ix['2', 'Phylum2 total'] == 3)
+        assert_true(output.result_matrix.ix['2', 'Phylum2 >1'] == 0)
+        assert_true(output.result_matrix.ix['2', 'Phylum2 ==1'] == 2)
+
+        assert_true(output.result_matrix.ix['1', 'Phylum3 total'] == 2)
+        assert_true(output.result_matrix.ix['1', 'Phylum3 >1'] == 0)
+        assert_true(output.result_matrix.ix['1', 'Phylum3 ==1'] == 1)
+        
+        assert_true(output.result_matrix.ix['2', 'Phylum3 total'] == 2)
+        assert_true(output.result_matrix.ix['2', 'Phylum3 >1'] == 0)
+        assert_true(output.result_matrix.ix['2', 'Phylum3 ==1'] == 1)
 
