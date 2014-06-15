@@ -103,7 +103,7 @@ if __name__ == "__main__":
            help='Threshold identity in percent, default=0.0')
     parser.add_argument('--cdd_cog_file', required=True,
             help = ('REQUIRED: Supply a cdd to cog mapping file in a tsv format.'))
-    parser.add_argument('--min_genera', default=0,
+    parser.add_argument('--min_genera', default=0, type=int,
             help=('REQUIRED: The minimum number of generas for a phylum needed to be '
                  'included in the analysis'))
     parser.add_argument('--separator', default="_",
