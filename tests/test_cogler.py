@@ -111,12 +111,16 @@ class TestOutput(object):
         output.add_phylum(self.phylum2)
         output.add_phylum(self.phylum3)
 
-        columns = ['Phylum1 total', 'Phylum1 >1', 'Phylum1 ==1',
-                'Phylum2 total', 'Phylum2 >1', 'Phylum2 ==1',
-                'Phylum3 total', 'Phylum3 >1', 'Phylum3 ==1']
+        columns = ['Phylum1 ==1', 'Phylum1 >1', 'Phylum1 total',
+                'Phylum2 ==1', 'Phylum2 >1', 'Phylum2 total',
+                'Phylum3 ==1', 'Phylum3 >1', 'Phylum3 total']
 
         for column in columns:
             assert_true(column in output.result_matrix.columns)
+
+        # Test the order of columns
+        assert_true((columns == output.result_matrix.columns).all(),
+                msg="The columns are not ordered")
         assert_true(len(output.result_matrix.index.values) == 2)
         assert_true(set(output.result_matrix.index.values) == set(['1', '2']))
         assert_true(output.result_matrix.ix['1', 'Phylum1 total'] == 2)
@@ -155,12 +159,15 @@ class TestOutput(object):
         output.add_phylum(self.phylum2)
         output.add_phylum(self.phylum3)
 
-        columns = ['Phylum1 total', 'Phylum1 >1', 'Phylum1 ==1',
-                'Phylum2 total', 'Phylum2 >1', 'Phylum2 ==1',
-                'Phylum3 total', 'Phylum3 >1', 'Phylum3 ==1']
+        columns = ['Phylum1 ==1', 'Phylum1 >1', 'Phylum1 total',
+                'Phylum2 ==1', 'Phylum2 >1', 'Phylum2 total',
+                'Phylum3 ==1', 'Phylum3 >1', 'Phylum3 total']
 
         for column in columns:
             assert_true(column in output.result_matrix.columns)
+        # Test the order of columns
+        assert_true((columns == output.result_matrix.columns).all(),
+                msg="The columns are not ordered")
         assert_true(len(output.result_matrix.index.values) == 2)
         assert_true(set(output.result_matrix.index.values) == set(['1', '2']))
         assert_true(output.result_matrix.ix['1', 'Phylum1 total'] == 2)
