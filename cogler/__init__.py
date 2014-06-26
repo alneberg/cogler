@@ -106,3 +106,7 @@ class Output(object):
             self.result_matrix = new_matrix
         else:
             self.result_matrix = pd.concat([self.result_matrix, new_matrix], axis=1)
+
+        self.result_matrix = self.result_matrix.reindex_axis(
+                sorted(self.result_matrix.columns),
+                axis=1)
